@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useState } from 'react';
 import Button from '../components/Button';
+import TodoInput from '../components/TodoInput';
 
 
 
@@ -38,7 +39,7 @@ export default function App() {
         <View style={styles.Modalcontainer}>
           <Image 
             source={require('../assets/target_img.jpg')} style={styles.image} />
-          <TextInput style={styles.Goalinput} placeholder='Your Course Goal' value={TaskInput} onChangeText={setTaskInput} />
+            <TodoInput />
           <View style={styles.buttonContainer}>
             <Button title="Cancel" onPress={() => setIsModalVisible(false)} color="#e8043dff" />
             <Button title="Add Goal" onPress={() => AddTask(TaskInput)} color="#7432f7ff" />
