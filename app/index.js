@@ -7,9 +7,10 @@ import {
   View, 
   Image 
 } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../components/Button';
 import TodoInput from '../components/TodoInput';
+import TodoItem from '../components/TodoItem';
 
 
 
@@ -17,7 +18,7 @@ import TodoInput from '../components/TodoInput';
 export default function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [tasks, setTasks] = useState([]);
-  // You also need state for the TextInput value if you want to capture the goal
+
   const [TaskInput, setTaskInput] = useState(''); 
   
   const AddTask = (newTaskText) => {
@@ -33,23 +34,28 @@ export default function App() {
     setIsModalVisible(false);
   };
 
+  useEffect(() => {}, [tasks]);
+  useEffect(() => {}, [isModalVisible]);
   return (
     <View style={styles.container}>
       <Modal visible={isModalVisible} animationType="slide">
         <View style={styles.Modalcontainer}>
-          <Image 
-            source={require('../assets/target_img.jpg')} style={styles.image} />
+          <Image source={require('../assets/target_img.png')} style={styles.image} />
             <TodoInput />
           <View style={styles.buttonContainer}>
-            <Button title="Cancel" onPress={() => setIsModalVisible(false)} color="#e8043dff" />
-            <Button title="Add Goal" onPress={() => AddTask(TaskInput)} color="#7432f7ff" />
+            <Button title="CANCEL" onPress={() => setIsModalVisible(false)} color="#f95026b2" />
+            <Button title="ADD GOAL" onPress={() => AddTask(TaskInput)} color="#6bae9ae8" />
           </View>
         </View>
       </Modal>
     <View style={styles.addbutton}>
-        <Button title="Add Task"  onPress={() => setIsModalVisible(true)} color="#38003D" />
+        <Button title="ADD NEW GOAL"  onPress={() => setIsModalVisible(true)} color="#38003D" />
     </View>
-      
+      {
+      tasks.map((task) => (
+        <TodoItem key={task.id} text={task.text} />
+      ))
+      }
     </View>
   );
 }
@@ -64,19 +70,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#A8BEF7',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 50, // Added padding to separate button from top edge
+    paddingTop: 50, 
   },
   Modalcontainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#b46ae9ff',
-    padding: 16,
+    backgroundColor: '#a28a9eff',
   },
-  image: { // <-- ADDED: Style for the Image component
-    width: 100,
-    height: 100,
-    marginBottom: 20,
+  image: { 
+    width: 150,
+    height: 150,
   },
   Goalinput: {
     borderWidth: 1,
@@ -89,7 +93,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '60%',
+      justifyContent: 'space-around',
+      width: '55%',
   }
 });
