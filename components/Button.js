@@ -3,9 +3,9 @@ import React from 'react'
 
 const Button = (props) => {
   return (
-    <PressableOpacity style={styles.buttonStyle} onPress={props.onPress}>
-      <Text>{props.title}</Text>
-    </PressableOpacity>
+    <Pressable style={[styles.buttonStyle, { backgroundColor: props.color || '#DDDDDD' }]} onPress={props.onPress}>
+      <Text style={styles.buttonText}>{props.title}</Text>
+    </Pressable>
   )
 }
 
@@ -13,8 +13,14 @@ export default Button
 
 const styles = StyleSheet.create({
     buttonStyle:{
-        backgroundColor: props.color || '#DDDDDD',
-        padding: 5,
+        padding: 8,
         alignItems: 'center',
+        textAlign: 'center',
+    },
+    buttonText:{
+      fontSize: 20,
+      color: 'white',
+      fontWeight: 'bold',
+      letterSpacing: 1.5,
     }
 })
