@@ -5,7 +5,8 @@ import {
   Text, 
   TextInput, 
   View, 
-  Image 
+  Image, 
+  Alert
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import Button from '../components/Button';
@@ -21,30 +22,38 @@ export default function App() {
 
   const [TaskInput, setTaskInput] = useState(''); 
   
-  const AddTask = (newTaskText) => {
-    if (!newTaskText) {
-      setIsModalVisible(false);
-      return; 
-    }
-    setTasks(currentTasks => [
-      ...currentTasks, 
-      { text: newTaskText, id: Math.random().toString() }
-    ]);
-    setTaskInput('');
+  const addTodoHandler = () => {
+  if (!TaskInput.trim()) {
     setIsModalVisible(false);
+    setTaskInput('');
+    return; 
+  }
+  setTasks(currentTasks => [
+    ...currentTasks, 
+    { text: TaskInput, id: Math.random().toString() }
+  ]);
+  setTaskInput('');
+  setIsModalVisible(false);
+};
+
+  const deleteTodoHandler = (taskId) => {
+    Alert.alert(' ', 'Are you sure?',
+        [{text: 'No', style: 'cancel'},
+            {text: 'Yes', onPress: () => setTasks(tasks.filter(task => task.id !== taskId))}
+        ]
+    );
   };
 
-  useEffect(() => {}, [tasks]);
-  useEffect(() => {}, [isModalVisible]);
+
   return (
     <View style={styles.container}>
       <Modal visible={isModalVisible} animationType="slide">
         <View style={styles.Modalcontainer}>
           <Image source={require('../assets/target_img.png')} style={styles.image} />
-            <TodoInput />
+            <TodoInput value={TaskInput} onChangeText={setTaskInput} />
           <View style={styles.buttonContainer}>
-            <Button title="CANCEL" onPress={() => setIsModalVisible(false)} color="#f95026b2" />
-            <Button title="ADD GOAL" onPress={() => AddTask(TaskInput)} color="#6bae9ae8" />
+            <Button title="CANCEL" onPress={() => {setTaskInput(''); setIsModalVisible(false)}} color="#ed6b00d5" />
+            <Button title="ADD GOAL" onPress={addTodoHandler} color="#30a61292" />
           </View>
         </View>
       </Modal>
@@ -53,7 +62,7 @@ export default function App() {
     </View>
       {
       tasks.map((task) => (
-        <TodoItem key={task.id} text={task.text} />
+        <TodoItem key={task.id} text={task.text} onPress={() => deleteTodoHandler(task.id)} />
       ))
       }
     </View>
@@ -76,20 +85,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#a28a9eff',
+    backgroundColor: '#3d95ad8f',
   },
   image: { 
-    width: 150,
-    height: 150,
-  },
-  Goalinput: {
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    width: '80%',
-    padding: 8,
-    backgroundColor: '#ffffff',
-    borderRadius: 6,
-    marginBottom: 16,
+    width: 100,
+    height: 100,
+    marginBottom: 40,
   },
   buttonContainer: {
       flexDirection: 'row',

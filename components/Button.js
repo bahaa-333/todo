@@ -14,8 +14,11 @@ export default Button
 const styles = StyleSheet.create({
     buttonStyle:{
         padding: 8,
-        alignItems: 'center',
+        alignItems: 'center', 
         textAlign: 'center',
+        borderRadius: 5,
+        paddingHorizontal: 7,
+        paddingVertical: 7
     },
     buttonText:{
       fontSize: 20,

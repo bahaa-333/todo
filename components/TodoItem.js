@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 const TodoItem = (props) => {
   return (
-    <View style={styles.itemContainer}>
+    <Pressable style={styles.itemContainer} onPress={props.onPress}>
       <Text style={styles.itemText}>{props.text}</Text>
-    </View>
+    </Pressable>
   )
 }
 
@@ -13,16 +13,17 @@ export default TodoItem
 
 const styles = StyleSheet.create({
     itemContainer:{
-        width: '92%',
-        height: 60,
-        backgroundColor: '#ffffff92',
-        marginLeft: 15,
+        width: '89%',
+        height: 48,
+        backgroundColor: '#26242452',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        marginBottom: 7
+        marginTop: 10,
+        borderRadius: 10,
+        paddingLeft: 10,
     },
     itemText:{
-        color: 'black',
+        color: 'white',
         fontSize: 18,
         padding: 5,
     }
